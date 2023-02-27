@@ -13,7 +13,6 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
 
 const drawerWidth = 240;
 const navItems = ["Products", "Services", "Contact", "Log in", "Get Access"];
@@ -21,8 +20,6 @@ const navItems = ["Products", "Services", "Contact", "Log in", "Get Access"];
 export const Header = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [offsetY, setOffsetY] = useState(0);
-  const location = useLocation();
-  const navigate = useNavigate();
 
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
@@ -56,9 +53,6 @@ export const Header = () => {
     </Box>
   );
 
-
-  console.log(location);
-
   useEffect(() => {
     const handler = () => {
       setOffsetY(window.scrollY);
@@ -66,7 +60,6 @@ export const Header = () => {
     window.addEventListener("scroll", handler);
     return () => window.removeEventListener("scroll", handler);
   }, []);
-  console.log(offsetY);
 
   return (
     <Box sx={{ display: "flex" }}>

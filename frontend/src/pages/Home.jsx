@@ -1,7 +1,11 @@
-import { Box } from "@mui/material"
+import CoverPage from "../components/cover";
 
-export const Home = () => {
-    return (
-        <Box>hi</Box>
-    )
-}
+export const HomePage = () => {
+  return (
+    <>
+      <CoverPage />
+    </>
+  );
+};
+
+export default HomePage;
