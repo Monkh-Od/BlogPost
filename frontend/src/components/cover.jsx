@@ -1,8 +1,21 @@
-import { Box, Button, TextField, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  TextField,
+  Typography,
+  createTheme,
+  ThemeProvider,
+} from "@mui/material";
 import { Container } from "@mui/system";
 import Coverimage from "../assets/images/home-background.png";
 
 export const CoverPage = () => {
+  const button = createTheme({
+    palette: {
+      primary: { main: "#4da6ff" },
+    },
+  });
+
   return (
     <Box sx={styles.coverbgimage}>
       <Container maxWidth="xl">
@@ -25,10 +38,12 @@ export const CoverPage = () => {
             },
           }}
         >
-          <TextField sx={styles.input} />
-          <Button variant="outlined" sx={styles.button}>
-            Get early access
-          </Button>
+          <TextField sx={styles.input} placeholder="Email" variant="outlined" />
+          <ThemeProvider theme={button}>
+            <Button variant="contained" color="primary" sx={styles.button}>
+              Get early access
+            </Button>
+          </ThemeProvider>
         </Box>
       </Container>
     </Box>
@@ -86,11 +101,8 @@ const styles = {
       xl: "15px",
       xs: "13px",
     },
-    height: {
-      xl: "5vh",
-    },
-    width: "15vh",
-    background: "#4da6ff",
+    height: 56,
+    width: { xl: "10vw" },
     borderRadius: "10px",
   },
   input: {
@@ -100,12 +112,12 @@ const styles = {
     },
     height: {
       xl: "auto",
-      xs: 40,
     },
     gap: 2,
     color: "#a6a6a6",
-    border: "3px solid #bbc8d4",
+    borderRadius: 2,
     backgroundColor: "white",
+    mr: 3,
   },
 };
 export default CoverPage;
