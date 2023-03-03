@@ -151,3 +151,5 @@ const styles = {
     fontFamily: "Mulish",
   },
 };
+
+export default Post;
