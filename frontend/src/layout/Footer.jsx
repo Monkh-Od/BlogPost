@@ -179,7 +179,7 @@ export const Footer = () => {
                 placeholder="Email"
                 disableUnderline={true}
                 sx={{
-                  width: "300px",
+                  width: "250px",
                   height: "56px",
                   background: "#FFFFFF",
                 }}
