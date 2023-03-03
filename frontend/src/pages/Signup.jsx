@@ -1,5 +1,6 @@
 import React from "react";
 import { Container, Typography, TextField, Button, Link, FormControlLabel, Checkbox } from "@mui/material/";
+import { useNavigate } from "react-router-dom";
 
 const style = {
   Container: {
@@ -12,8 +13,8 @@ const style = {
 };
 
 const Signup = () => {
+  const navigate = useNavigate()
   return (
-    <div>
       <Container maxWidth="sm" sx={style.Container}>
         <Typography variant="h4" color="primary">
           Sign up
@@ -24,7 +25,7 @@ const Signup = () => {
         <Button variant="contained" size="large" sx={{ mt: 3 }} fullWidth>
           SIGN UP
         </Button>
-        <Link href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" sx={{ mt: 3 }}>
+        <Link to={"/login"} sx={{ mt: 3, cursor:"pointer" }} onClick={()=> navigate("/login")}>
           Already have an account? Sign in
         </Link>
         <Typography>Made with ❤️ by Pinecone Academy</Typography>
@@ -34,7 +35,6 @@ const Signup = () => {
           label="I agree to all Terms of Service and Privacy Policy"
         />
       </Container>
-    </div>
   );
 };
 

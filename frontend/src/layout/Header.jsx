@@ -12,15 +12,26 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { Container } from "@mui/system";
 
 const drawerWidth = 240;
-const navItems = ["Products", "Services", "Contact", "Log in", "Get Access"];
+const navItems = ["Blogs", "Services", "Contact", "Log in", "Get Access"];
 
 export const Header = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [offsetY, setOffsetY] = useState(0);
 
+  useEffect(() => {
+    const handler = () => {
+      setOffsetY(window.scrollY);
+    };
+    window.addEventListener("scroll", handler);
+    return () => window.removeEventListener("scroll", handler);
+  }, []);
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
   };
@@ -28,7 +39,10 @@ export const Header = () => {
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
       <Box display={"flex"}>
-        <Typography variant="h6" sx={{ my: 2 }}>
+        <Typography
+          variant="h6"
+          sx={{ my: 2, color: offsetY !== 0 && "black" }}
+        >
           team
         </Typography>
         <Box
@@ -60,47 +74,80 @@ export const Header = () => {
     window.addEventListener("scroll", handler);
     return () => window.removeEventListener("scroll", handler);
   }, []);
-
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box>
       <CssBaseline />
-      <AppBar component="nav">
-        <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            edge="start"
-            onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { sm: "none" } }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Box
-            component="div"
-            sx={{
-              flexGrow: 1,
-              display: { xs: "none", sm: "flex" },
-            }}
-          >
-            <Typography variant="h5">team</Typography>
+      <AppBar
+        component="nav"
+        sx={{ backgroundColor: offsetY === 0 ? "transparent" : "white" }}
+      >
+        <Container maxWidth="xl">
+          <Toolbar>
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              edge="start"
+              onClick={handleDrawerToggle}
+              sx={{ mr: 2, display: { sm: "none" } }}
+            >
+              <MenuIcon />
+            </IconButton>
             <Box
+              component="div"
               sx={{
-                width: "7px",
-                height: "7px",
-                backgroundColor: "#0BBEF2",
-                marginTop: "17px",
+                flexGrow: 1,
+                display: { xs: "none", sm: "flex" },
               }}
-            ></Box>
-          </Box>
+            >
+              <Typography
+                variant="h5"
+                sx={{
+                  color:
+                    offsetY !== 0 || location.pathname !== "/"
+                      ? "black"
+                      : "white",
+                  cursor: "pointer",
+                }}
+                onClick={() => {
+                  navigate("/");
+                }}
+              >
+                team
+              </Typography>
+              <Box
+                sx={{
+                  width: "7px",
+                  height: "7px",
+                  backgroundColor:
+                    location.pathname !== "/" ? "black" : "#0BBEF2",
+                  marginTop: "17px",
+                }}
+              ></Box>
+            </Box>
 
-          <Box sx={{ display: { xs: "none", sm: "block" } }}>
-            {navItems.map((item) => (
-              <Button key={item} sx={{ color: "#fff" }}>
-                {item}
-              </Button>
-            ))}
-          </Box>
-        </Toolbar>
+            <Box sx={{ display: { xs: "none", sm: "block" } }}>
+              {navItems.map((item) => (
+                <Button
+                  key={item}
+                  sx={{
+                    color:
+                      offsetY !== 0 || location.pathname !== "/"
+                        ? "#6D7D8B"
+                        : "white",
+                    textDecoration: item !== "Get Access" &&"1px #6D7D8B underline",
+                    border : item === "Get Access" && "2px solid rgba(77, 160, 253, 0.42)",
+                  }}
+                  style={{color : item === "Get Access" && "#4DA0FD"}}
+                  onClick={() => {
+                    item === "Log in" && navigate("/login");
+                  }}
+                >
+                  {item}
+                </Button>
+              ))}
+            </Box>
+          </Toolbar>
+        </Container>
       </AppBar>
       <Box component="nav">
         <Drawer
@@ -116,6 +163,7 @@ export const Header = () => {
               boxSizing: "border-box",
               width: drawerWidth,
             },
+            backgroundColor: "black",
           }}
         >
           {drawer}

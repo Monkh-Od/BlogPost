@@ -1,5 +1,6 @@
 import React from "react";
 import { Container, Typography, TextField, Button, Link } from "@mui/material/";
+import { useNavigate } from "react-router-dom";
 
 const style = {
   Container: {
@@ -12,8 +13,8 @@ const style = {
 };
 
 const Signin = () => {
+  const navigate = useNavigate();
   return (
-    <div>
       <Container maxWidth="sm" sx={style.Container}>
         <Typography variant="h4" color="primary">
           Sign in
@@ -23,11 +24,10 @@ const Signin = () => {
         <Button variant="contained" size="large" sx={{ mt: 3 }} fullWidth>
           SIGN IN
         </Button>
-        <Link href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" sx={{ mt: 3 }}>
+        <Link sx={{ mt: 3, cursor: "pointer" }} onClick={()=> {navigate("/signup")} }>
           Dont have an account? Click here!
         </Link>
       </Container>
-    </div>
   );
 };
 
