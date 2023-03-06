@@ -25,21 +25,25 @@ exports.createUser = async (req, res) => {
 exports.Login = async (req, res) => {
   const { email, password } = req.body;
   try {
-    const user = await User.findOne({ email: email });
-    const match = await bcrypt.compare(password, user.password);
-    if (match) {
-      const token = jwt.sign(
-        {
-          email: user.email,
-        },
-        process.env.ACCESS_TOKEN_KEY,
-        { expiresIn: "1h" }
-      );
-      res.send({ email: user.email, match: match, token: token }).status(200);
+    const user = await User.findOne({ email });
+    if (user) {
+      const match = await bcrypt.compare(password, user.password);
+      if (match) {
+        const token = jwt.sign(
+          {
+            email: user.email,
+          },
+          process.env.ACCESS_TOKEN_KEY,
+          { expiresIn: "1h" }
+        );
+        res.status(200).send({ email: user.email, match: match, token: token });
+      } else {
+        res.status(404).send({ message: "wrong password" });
+      }
     } else {
-      res.send({ message: "failed" }).status(500);
+      res.status(404).send({ message: "no user found" });
     }
   } catch (error) {
-    res.send({ message: error }).status(500);
+    res.status(404).send({ message: error });
   }
 };
