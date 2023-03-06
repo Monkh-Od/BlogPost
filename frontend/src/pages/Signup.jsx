@@ -1,3 +1,6 @@
+import React from "react";
+import axios from "axios";
+import { useInput } from "../hooks/useInput";
 import {
   Container,
   Typography,
@@ -7,9 +10,6 @@ import {
   FormControlLabel,
   Checkbox,
 } from "@mui/material/";
-import { useNavigate } from "react-router-dom";
-import React, { useState } from "react";
-import axios from "axios";
 
 const style = {
   Container: {
@@ -22,14 +22,13 @@ const style = {
 };
 
 const Signup = () => {
-  const navigate = useNavigate();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [check, setCheck] = useState("");
+  const [email, BindEmail] = useInput("");
+  const [password, BindPassword] = useInput("");
+  const [check, BindCheck] = useInput("");
 
   const register = async () => {
     if (password !== check) {
-      alert("password is incorrect passaaa shalga zayu");
+      alert("password is incorrect");
       return;
     }
     try {
@@ -44,62 +43,54 @@ const Signup = () => {
   };
 
   return (
-    <Container maxWidth="sm" sx={style.Container}>
-      <Typography variant="h4" color="primary">
-        Sign up
-      </Typography>
-      <TextField
-        label="Email"
-        focused
-        sx={{ mt: 3 }}
-        fullWidth
-        onChange={(el) => {
-          setEmail(el.target.value);
-        }}
-      />
-      <TextField
-        label="Password"
-        focused
-        sx={{ mt: 3 }}
-        fullWidth
-        onChange={(el) => {
-          setPassword(el.target.value);
-        }}
-      />
-      <TextField
-        label="Password"
-        focused
-        sx={{ mt: 3 }}
-        fullWidth
-        onChange={(el) => {
-          setCheck(el.target.value);
-        }}
-      />
-      <Button
-        variant="contained"
-        size="large"
-        sx={{ mt: 3 }}
-        fullWidth
-        onClick={() => {
-          register();
-        }}
-      >
-        SIGN UP
-      </Button>
-      <Link
-        to={"/login"}
-        sx={{ mt: 3, cursor: "pointer" }}
-        onClick={() => navigate("/login")}
-      >
-        Already have an account? Sign in
-      </Link>
-      <Typography>Made with ❤️ by Pinecone Academy</Typography>
-      <Typography sx={{ opacity: 0.2 }}>©blogpost.io 2023</Typography>
-      <FormControlLabel
-        control={<Checkbox color="primary" />}
-        label="I agree to all Terms of Service and Privacy Policy"
-      />
-    </Container>
+    <div>
+      <Container maxWidth="sm" sx={style.Container}>
+        <Typography variant="h4" color="primary">
+          Sign up
+        </Typography>
+        <TextField
+          label="Email"
+          focused
+          sx={{ mt: 3 }}
+          fullWidth
+          {...BindEmail}
+        />
+        <TextField
+          label="Password"
+          focused
+          sx={{ mt: 3 }}
+          fullWidth
+          {...BindPassword}
+        />
+        <TextField
+          label="Password"
+          focused
+          sx={{ mt: 3 }}
+          fullWidth
+          {...BindCheck}
+        />
+        <Button
+          variant="contained"
+          size="large"
+          sx={{ mt: 3 }}
+          fullWidth
+          onClick={() => {
+            register();
+          }}
+        >
+          SIGN UP
+        </Button>
+        <Link href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" sx={{ mt: 3 }}>
+          Already have an account? Sign in
+        </Link>
+        <Typography>Made with ❤️ by Pinecone Academy</Typography>
+        <Typography sx={{ opacity: 0.2 }}>©blogpost.io 2023</Typography>
+        <FormControlLabel
+          control={<Checkbox color="primary" />}
+          label="I agree to all Terms of Service and Privacy Policy"
+        />
+      </Container>
+    </div>
   );
 };
 
