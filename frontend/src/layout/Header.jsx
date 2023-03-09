@@ -140,6 +140,7 @@ export const Header = () => {
                   style={{color : item === "Get Access" && "#4DA0FD"}}
                   onClick={() => {
                     item === "Log in" && navigate("/login");
+                    item === "Blogs" && navigate("/blogposts");
                   }}
                 >
                   {item}

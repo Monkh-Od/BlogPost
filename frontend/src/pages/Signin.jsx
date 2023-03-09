@@ -15,15 +15,16 @@ const style = {
 };
 
 const Signin = () => {
+  const navigate = useNavigate();
   const [email, EmailBind] = useInput("");
   const [password, PasswordBind] = useInput("");
   const login = async () => {
     try {
-      const response = await axios.post("http://localhost:8010/users/login", {
+      const {data} = await axios.post("http://localhost:8010/users/login", {
         email: email,
         password: password,
       });
-      console.log(response);
+      if(data.match) navigate("/blogposts")
     } catch (error) {
       console.log(error);
     }
@@ -58,7 +59,10 @@ const Signin = () => {
         >
           SIGN IN
         </Button>
-        <Link href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" sx={{ mt: 3 }}>
+        <Link
+          sx={{ mt: 3, cursor: "pointer" }}
+          onClick={() => navigate("/signup")}
+        >
           Dont have an account? Click here!
         </Link>
       </Container>

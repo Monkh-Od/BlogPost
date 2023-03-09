@@ -10,6 +10,7 @@ import {
   FormControlLabel,
   Checkbox,
 } from "@mui/material/";
+import { useNavigate } from "react-router-dom";
 
 const style = {
   Container: {
@@ -22,6 +23,7 @@ const style = {
 };
 
 const Signup = () => {
+  const navigate = useNavigate()
   const [email, BindEmail] = useInput("");
   const [password, BindPassword] = useInput("");
   const [check, BindCheck] = useInput("");
@@ -32,11 +34,11 @@ const Signup = () => {
       return;
     }
     try {
-      const rs = await axios.post("http://localhost:8010/users/signup", {
+      const {data} = await axios.post("http://localhost:8010/users/signup", {
         email: email,
         password: password,
       });
-      console.log(rs);
+      if(data) navigate("/login")
     } catch (error) {
       console.error(error);
     }
