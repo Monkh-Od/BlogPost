@@ -1,16 +1,8 @@
-import React from "react";
-import {
-  Container,
-  Typography,
-  TextField,
-  Button,
-  Link,
-  FormControlLabel,
-  Checkbox,
-} from "@mui/material/";
+import React, { useState } from "react";
 import axios from "axios";
 import { useInput } from "../hooks/useInput";
 import {
+  Box,
   Container,
   Typography,
   TextField,
@@ -18,10 +10,11 @@ import {
   Link,
   FormControlLabel,
   Checkbox,
+  InputAdornment,
+  IconButton,
 } from "@mui/material/";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
-import { useContext } from "react";
-import { ColorModeContext } from "../contexts/themeContext";
 import { Box } from "@mui/system";
 
 const style = {
@@ -36,20 +29,21 @@ const style = {
 
 const Signup = () => {
   const navigate = useNavigate();
-  const [email, BindEmail] = useInput("");
-  const [password, BindPassword] = useInput("");
-  const [check, BindCheck] = useInput("");
-  const { color } = useContext(ColorModeContext);
+  const [email, setEmail] = useInput("");
+  const [password1, setPassword1] = useState();
+  const [password2, setPassword2] = useState();
+  const [showPassword1, setShowPassword1] = useState(false);
+  const [showPassword2, setShowPassword2] = useState(false);
 
   const register = async () => {
-    if (password !== check) {
+    if (password1 !== password2) {
       alert("password is incorrect");
       return;
     }
     try {
       const { data } = await axios.post("http://localhost:8010/users/signup", {
         email: email,
-        password: password,
+        password: password1,
       });
       if (data) navigate("/login");
     } catch (error) {
@@ -57,60 +51,93 @@ const Signup = () => {
     }
   };
   return (
-    <Box
-      sx={{
-        backgroundColor: color === "dark" ? "white" : "black",
-        color: color === "dark" ? "black" : "white",
-      }}
-    >
-      <Container maxWidth="sm" sx={style.Container}>
-        <Typography variant="h4">Sign up</Typography>
-        <TextField
-          label="Email"
-          focused
-          sx={{ mt: 3, input: { color: color === "dark" ? "black" : "white" } }}
-          fullWidth
-          {...BindEmail}
-        />
-        <TextField
-          label="Password"
-          focused
-          {...BindPassword}
-          sx={{ mt: 3, input: { color: color === "dark" ? "black" : "white" } }}
-          fullWidth
-        />
-        <TextField
-          label="Password"
-          focused
-          sx={{ mt: 3, input: { color: color === "dark" ? "black" : "white" } }}
-          fullWidth
-        />
-        <Button
-          variant="contained"
-          size="large"
-          sx={{ mt: 3 }}
-          fullWidth
-          onClick={() => {
-            register();
-          }}
-        >
-          SIGN UP
-        </Button>
-        <Link
-          to={"/login"}
-          sx={{ mt: 3, cursor: "pointer" }}
-          onClick={() => navigate("/login")}
-        >
-          Already have an account? Sign in!
-        </Link>
-        <Typography>Made with ❤️ by Pinecone Academy</Typography>
-        <Typography sx={{ opacity: 0.2 }}>©blogpost.io 2023</Typography>
-        <FormControlLabel
-          control={<Checkbox color="primary" />}
-          label="I agree to all Terms of Service and Privacy Policy"
-        />
-      </Container>
-    </Box>
+    <div>
+      <Box>
+        <Container maxWidth="sm" sx={style.Container}>
+          <Typography variant="h4" color="primary">
+            Sign up
+          </Typography>
+          <TextField
+            type={"email"}
+            label="Email"
+            focused
+            sx={{ mt: 3 }}
+            fullWidth
+            onChange={(e) => {
+              setEmail(e.target.value);
+            }}
+          />
+          <TextField
+            label="Password"
+            focused
+            type={showPassword1 ? "text" : "password"}
+            sx={{ mt: 3 }}
+            fullWidth
+            onChange={(e) => {
+              setPassword1(e.target.value);
+            }}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={() => setShowPassword1(!showPassword1)}
+                    onMouseDown={() => setShowPassword1(!showPassword1)}
+                  >
+                    {showPassword1 ? <Visibility /> : <VisibilityOff />}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+          />
+          <TextField
+            label="Password"
+            focused
+            type={showPassword2 ? "text" : "password"}
+            sx={{ mt: 3 }}
+            fullWidth
+            onChange={(e) => {
+              setPassword2(e.target.value);
+            }}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={() => setShowPassword2(!showPassword2)}
+                    onMouseDown={() => setShowPassword2(!showPassword2)}
+                  >
+                    {showPassword2 ? <Visibility /> : <VisibilityOff />}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+          />
+          <FormControlLabel
+            sx={{ width: "100%", textAlign: "left", mt: 1 }}
+            control={<Checkbox color="primary" />}
+            label="I agree to all Terms of Service and Privacy Policy"
+          />
+          <Button
+            variant="contained"
+            size="large"
+            sx={{ mt: 3 }}
+            fullWidth
+            onClick={() => {
+              register();
+            }}
+          >
+            SIGN UP
+          </Button>
+          <Link
+            sx={{ mt: 3, width: "100%", textAlign: "right" }}
+            onClick={() => navigate("/login")}
+          >
+            Already have an account? Sign in
+          </Link>
+        </Container>
+      </Box>
+    </div>
   );
 };
 
