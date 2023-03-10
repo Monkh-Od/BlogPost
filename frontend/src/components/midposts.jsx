@@ -33,7 +33,6 @@ const Midposts = ({ isInverted = false, image, spaced = false }) => {
             >
               <Typography
                 variant="h3"
-                color="initial"
                 fontWeight="800"
                 maxWidth="400px"
                 sx={{ mb: 3 }}
@@ -42,7 +41,6 @@ const Midposts = ({ isInverted = false, image, spaced = false }) => {
               </Typography>
               <Typography
                 variant="body1"
-                color="initial"
                 maxWidth="410px"
                 sx={{
                   mb: 3,

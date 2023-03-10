@@ -46,7 +46,7 @@ const Review = () => {
   return (
     <Box sx={style.out}>
       <Container maxWidth="xl">
-        <Typography variant="h2" color="initial" sx={style.title}>
+        <Typography variant="h2" sx={style.title}>
           What poeple say about us
         </Typography>
         <Box sx={style.cardsContainer}>
@@ -101,11 +101,7 @@ const Review = () => {
                         />
 
                         <br />
-                        <Typography
-                          variant="body1"
-                          color="initial"
-                          sx={style.comment}
-                        >
+                        <Typography variant="body1" sx={style.comment}>
                           {number.text}
                         </Typography>
                       </Box>
@@ -115,11 +111,7 @@ const Review = () => {
                           sx={style.pfp}
                           src={number.picture}
                         />
-                        <Typography
-                          variant="h6"
-                          color="initial"
-                          sx={style.username}
-                        >
+                        <Typography variant="h6" sx={style.username}>
                           {number.name}
                         </Typography>
                       </Box>
