@@ -20,7 +20,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import { Container } from "@mui/system";
 import { ColorModeContext } from "../contexts/themeContext";
-import { AuthContext } from "../context/AuthContext";
+import { AuthContext } from "../contexts/AuthContext";
 
 const drawerWidth = 240;
 const navItems = ["Blogs", "Services", "Contact", "Log in", "Get Access"];
@@ -80,7 +80,6 @@ export const Header = () => {
   const [offsetY, setOffsetY] = useState(0);
 
   const { currentuser } = useContext(AuthContext);
-  console.log(currentuser);
 
   useEffect(() => {
     const handler = () => {

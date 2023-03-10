@@ -15,7 +15,6 @@ import {
 } from "@mui/material/";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
-import { Box } from "@mui/system";
 
 const style = {
   Container: {
@@ -27,7 +26,7 @@ const style = {
   },
 };
 
-const Signup = () => {
+export const Signup = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useInput("");
   const [password1, setPassword1] = useState();
@@ -140,5 +139,3 @@ const Signup = () => {
     </div>
   );
 };
-
-export default Signup;
