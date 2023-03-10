@@ -67,7 +67,7 @@ const Signin = () => {
           SIGN IN
         </Button>
         <Link
-          sx={{ mt: 3, cursor: "pointer" }}
+          sx={{ width: "100%", textAlign: "left", mt: 3, cursor: "pointer" }}
           onClick={() => navigate("/signup")}
         >
           Dont have an account? Click here!
