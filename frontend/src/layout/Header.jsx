@@ -1,3 +1,4 @@
+import * as React from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -12,14 +13,66 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Switch from "@mui/material/Switch";
+import { styled } from "@mui/material/styles";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Container } from "@mui/system";
+import { ColorModeContext } from "../contexts/themeContext";
 
 const drawerWidth = 240;
 const navItems = ["Blogs", "Services", "Contact", "Log in", "Get Access"];
 
+const MaterialUISwitch = styled(Switch)(({ theme }) => ({
+  width: 62,
+  height: 34,
+  padding: 7,
+  "& .MuiSwitch-switchBase": {
+    margin: 1,
+    padding: 0,
+    transform: "translateX(6px)",
+    "&.Mui-checked": {
+      color: "#fff",
+      transform: "translateX(22px)",
+      "& .MuiSwitch-thumb:before": {
+        backgroundImage: `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="20" width="20" viewBox="0 0 20 20"><path fill="${encodeURIComponent(
+          "#fff"
+        )}" d="M4.2 2.5l-.7 1.8-1.8.7 1.8.7.7 1.8.6-1.8L6.7 5l-1.9-.7-.6-1.8zm15 8.3a6.7 6.7 0 11-6.6-6.6 5.8 5.8 0 006.6 6.6z"/></svg>')`,
+      },
+      "& + .MuiSwitch-track": {
+        opacity: 1,
+        backgroundColor: theme.palette.mode === "dark" ? "#8796A5" : "#aab4be",
+      },
+    },
+  },
+  "& .MuiSwitch-thumb": {
+    backgroundColor: theme.palette.mode === "dark" ? "#003892" : "#001e3c",
+    width: 32,
+    height: 32,
+    "&:before": {
+      content: "''",
+      position: "absolute",
+      width: "100%",
+      height: "100%",
+      left: 0,
+      top: 0,
+      backgroundRepeat: "no-repeat",
+      backgroundPosition: "center",
+      backgroundImage: `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="20" width="20" viewBox="0 0 20 20"><path fill="${encodeURIComponent(
+        "#fff"
+      )}" d="M9.305 1.667V3.75h1.389V1.667h-1.39zm-4.707 1.95l-.982.982L5.09 6.072l.982-.982-1.473-1.473zm10.802 0L13.927 5.09l.982.982 1.473-1.473-.982-.982zM10 5.139a4.872 4.872 0 00-4.862 4.86A4.872 4.872 0 0010 14.862 4.872 4.872 0 0014.86 10 4.872 4.872 0 0010 5.139zm0 1.389A3.462 3.462 0 0113.471 10a3.462 3.462 0 01-3.473 3.472A3.462 3.462 0 016.527 10 3.462 3.462 0 0110 6.528zM1.665 9.305v1.39h2.083v-1.39H1.666zm14.583 0v1.39h2.084v-1.39h-2.084zM5.09 13.928L3.616 15.4l.982.982 1.473-1.473-.982-.982zm9.82 0l-.982.982 1.473 1.473.982-.982-1.473-1.473zM9.305 16.25v2.083h1.389V16.25h-1.39z"/></svg>')`,
+    },
+  },
+  "& .MuiSwitch-track": {
+    opacity: 1,
+    backgroundColor: theme.palette.mode === "dark" ? "#8796A5" : "#aab4be",
+    borderRadius: 20 / 2,
+  },
+}));
+
 export const Header = () => {
+  const { color, changeTheme } = useContext(ColorModeContext);
   const navigate = useNavigate();
   const location = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -37,12 +90,14 @@ export const Header = () => {
   };
 
   const drawer = (
-    <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
-      <Box display={"flex"}>
-        <Typography
-          variant="h6"
-          sx={{ my: 2, color: offsetY !== 0 && "black" }}
-        >
+    <Box
+      onClick={handleDrawerToggle}
+      sx={{
+        textAlign: "center",
+      }}
+    >
+      <Box display={"flex"} justifyContent={"center"}>
+        <Typography variant="h6" sx={{ my: 2 }}>
           team
         </Typography>
         <Box
@@ -50,7 +105,7 @@ export const Header = () => {
             width: "7px",
             height: "7px",
             backgroundColor: "#0BBEF2",
-            marginTop: "17px",
+            marginTop: "32px",
           }}
         ></Box>
       </Box>
@@ -63,6 +118,20 @@ export const Header = () => {
             </ListItemButton>
           </ListItem>
         ))}
+        <ListItem sx={{ justifyContent: "center" }}>
+          <FormControlLabel
+            control={
+              <MaterialUISwitch
+                sx={{ m: 1 }}
+                defaultChecked
+                // checked={theme || color === "white" ? true : false}
+                onChange={() => {
+                  changeTheme();
+                }}
+              />
+            }
+          />
+        </ListItem>
       </List>
     </Box>
   );
@@ -79,7 +148,14 @@ export const Header = () => {
       <CssBaseline />
       <AppBar
         component="nav"
-        sx={{ backgroundColor: offsetY === 0 ? "transparent" : "white" }}
+        sx={{
+          backgroundColor:
+            offsetY === 0
+              ? "transparent"
+              : color === "dark"
+              ? "white"
+              : "black",
+        }}
       >
         <Container maxWidth="xl">
           <Toolbar>
@@ -90,7 +166,7 @@ export const Header = () => {
               onClick={handleDrawerToggle}
               sx={{ mr: 2, display: { sm: "none" } }}
             >
-              <MenuIcon />
+              <MenuIcon sx={{ color: color === "dark" ? "black" : "white" }} />
             </IconButton>
             <Box
               component="div"
@@ -104,7 +180,9 @@ export const Header = () => {
                 sx={{
                   color:
                     offsetY !== 0 || location.pathname !== "/"
-                      ? "black"
+                      ? color === "dark"
+                        ? "black"
+                        : "white"
                       : "white",
                   cursor: "pointer",
                 }}
@@ -118,14 +196,25 @@ export const Header = () => {
                 sx={{
                   width: "7px",
                   height: "7px",
-                  backgroundColor:
-                    location.pathname !== "/" ? "black" : "#0BBEF2",
+                  backgroundColor: color === "dark" ? "#0BBEF2" : "white",
                   marginTop: "17px",
                 }}
               ></Box>
             </Box>
 
             <Box sx={{ display: { xs: "none", sm: "block" } }}>
+              <FormControlLabel
+                control={
+                  <MaterialUISwitch
+                    sx={{ m: 1 }}
+                    defaultChecked
+                    // checked={theme || color === "white" ? true : false}
+                    onChange={() => {
+                      changeTheme();
+                    }}
+                  />
+                }
+              />
               {navItems.map((item) => (
                 <Button
                   key={item}
@@ -134,10 +223,13 @@ export const Header = () => {
                       offsetY !== 0 || location.pathname !== "/"
                         ? "#6D7D8B"
                         : "white",
-                    textDecoration: item !== "Get Access" &&"1px #6D7D8B underline",
-                    border : item === "Get Access" && "2px solid rgba(77, 160, 253, 0.42)",
+                    textDecoration:
+                      item !== "Get Access" && "1px #6D7D8B underline",
+                    border:
+                      item === "Get Access" &&
+                      "2px solid rgba(77, 160, 253, 0.42)",
                   }}
-                  style={{color : item === "Get Access" && "#4DA0FD"}}
+                  style={{ color: item === "Get Access" && "#4DA0FD" }}
                   onClick={() => {
                     item === "Log in" && navigate("/login");
                     item === "Blogs" && navigate("/blogposts");
@@ -163,8 +255,9 @@ export const Header = () => {
             "& .MuiDrawer-paper": {
               boxSizing: "border-box",
               width: drawerWidth,
+              backgroundColor: color === "dark" ? "white" : "black",
+              color: color === "dark" ? "black" : "white",
             },
-            backgroundColor: "black",
           }}
         >
           {drawer}

@@ -1,8 +1,12 @@
 import { Avatar, Typography } from "@mui/material";
 import { Box, Container } from "@mui/system";
 import Img from "../assets/images/Rectangle.png";
+import { useContext } from "react";
+import { ColorModeContext } from "../contexts/themeContext";
 
 export const Post = () => {
+  const { color } = useContext(ColorModeContext);
+
   return (
     <Container
       maxWidth="md"
