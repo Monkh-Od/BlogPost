@@ -20,6 +20,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import { Container } from "@mui/system";
 import { ColorModeContext } from "../contexts/themeContext";
+import { AuthContext } from "../context/AuthContext";
 
 const drawerWidth = 240;
 const navItems = ["Blogs", "Services", "Contact", "Log in", "Get Access"];
@@ -78,13 +79,18 @@ export const Header = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [offsetY, setOffsetY] = useState(0);
 
+  const { currentuser } = useContext(AuthContext);
+  console.log(currentuser);
+
   useEffect(() => {
     const handler = () => {
       setOffsetY(window.scrollY);
     };
+
     window.addEventListener("scroll", handler);
     return () => window.removeEventListener("scroll", handler);
   }, []);
+
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
   };
@@ -231,11 +237,14 @@ export const Header = () => {
                   }}
                   style={{ color: item === "Get Access" && "#4DA0FD" }}
                   onClick={() => {
-                    item === "Log in" && navigate("/login");
+                    if (item === "Log in" && currentuser) {
+                      return;
+                    }
+                    item === "Log in" && navigate("");
                     item === "Blogs" && navigate("/blogposts");
                   }}
                 >
-                  {item}
+                  {item === "Log in" && currentuser ? currentuser : item}
                 </Button>
               ))}
             </Box>
