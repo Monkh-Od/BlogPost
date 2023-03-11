@@ -1,4 +1,3 @@
-import React from "react";
 import { Container, Typography, TextField, Button, Link } from "@mui/material/";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -6,6 +5,8 @@ import { useInput } from "../hooks/useInput";
 import { useContext } from "react";
 import { ColorModeContext } from "../contexts/themeContext";
 import { Box } from "@mui/system";
+import Cookies from "js-cookie";
+import { AuthContext } from "../context/AuthContext";
 
 const style = {
   Container: {
@@ -18,16 +19,23 @@ const style = {
 };
 
 const Signin = () => {
-  const { color } = useContext(ColorModeContext);
   const navigate = useNavigate();
+  const { color } = useContext(ColorModeContext);
   const [email, EmailBind] = useInput("");
   const [password, PasswordBind] = useInput("");
+  const { setCurrentUser } = useContext(AuthContext);
+
   const login = async () => {
     try {
       const { data } = await axios.post("http://localhost:8010/users/login", {
         email: email,
         password: password,
       });
+
+      Cookies.set("token", data.token);
+      Cookies.set("email", data.email);
+      setCurrentUser(data.email);
+
       if (data.match) navigate("/blogposts");
     } catch (error) {
       console.log(error);
