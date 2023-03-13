@@ -1,26 +1,13 @@
-import * as React from "react";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import CssBaseline from "@mui/material/CssBaseline";
-import Divider from "@mui/material/Divider";
-import Drawer from "@mui/material/Drawer";
-import IconButton from "@mui/material/IconButton";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemText from "@mui/material/ListItemText";
-import MenuIcon from "@mui/icons-material/Menu";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Switch from "@mui/material/Switch";
-import { styled } from "@mui/material/styles";
+import { AppBar, Box, CssBaseline, Divider, Drawer } from "@mui/material";
+import { List, ListItemButton, ListItemText } from "@mui/material";
+import { Toolbar, Typography, IconButton, ListItem } from "@mui/material";
+import { Switch, Container, FormControlLabel } from "@mui/material";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
-import { Container } from "@mui/system";
-import { ColorModeContext } from "../contexts/themeContext";
-import { AuthContext } from "../contexts/AuthContext";
+import MenuIcon from "@mui/icons-material/Menu";
+import { Texts } from "./HeaderText";
+import styled from "@emotion/styled";
+import { ColorModeContext } from "../contexts";
 
 const drawerWidth = 240;
 const navItems = ["Blogs", "Services", "Contact", "Log in", "Get Access"];
@@ -78,8 +65,6 @@ export const Header = () => {
   const location = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [offsetY, setOffsetY] = useState(0);
-
-  const { currentuser } = useContext(AuthContext);
 
   useEffect(() => {
     const handler = () => {
@@ -141,13 +126,6 @@ export const Header = () => {
     </Box>
   );
 
-  useEffect(() => {
-    const handler = () => {
-      setOffsetY(window.scrollY);
-    };
-    window.addEventListener("scroll", handler);
-    return () => window.removeEventListener("scroll", handler);
-  }, []);
   return (
     <Box>
       <CssBaseline />
@@ -206,55 +184,15 @@ export const Header = () => {
                 }}
               ></Box>
             </Box>
-
-            <Box sx={{ display: { xs: "none", sm: "block" } }}>
-              <FormControlLabel
-                control={
-                  <MaterialUISwitch
-                    sx={{ m: 1 }}
-                    defaultChecked
-                    // checked={theme || color === "white" ? true : false}
-                    onChange={() => {
-                      changeTheme();
-                    }}
-                  />
-                }
-              />
-              {navItems.map((item) => (
-                <Button
-                  key={item}
-                  sx={{
-                    color:
-                      offsetY !== 0 || location.pathname !== "/"
-                        ? "#6D7D8B"
-                        : "white",
-                    textDecoration:
-                      item !== "Get Access" && "1px #6D7D8B underline",
-                    border:
-                      item === "Get Access" &&
-                      "2px solid rgba(77, 160, 253, 0.42)",
-                  }}
-                  style={{ color: item === "Get Access" && "#4DA0FD" }}
-                  onClick={() => {
-                    if (item === "Log in" && currentuser) {
-                      return;
-                    }
-                    item === "Log in" && navigate("");
-                    item === "Blogs" && navigate("/blogposts");
-                  }}
-                >
-                  {item === "Log in" && currentuser ? currentuser : item}
-                </Button>
-              ))}
-            </Box>
+            <Texts />
           </Toolbar>
         </Container>
       </AppBar>
       <Box component="nav">
         <Drawer
           variant="temporary"
-          open={mobileOpen}
           onClose={handleDrawerToggle}
+          open={mobileOpen}
           ModalProps={{
             keepMounted: true,
           }}
