@@ -2,7 +2,7 @@ import React, { createContext, useState } from "react";
 
 export const ColorModeContext = createContext();
 
-const ThemeContext = ({ children }) => {
+export const ThemeContext = ({ children }) => {
   const [isDark, setIsDark] = useState(false);
   const [color, setColor] = useState("light");
   const ColorHandler = () => {
@@ -24,4 +24,3 @@ const ThemeContext = ({ children }) => {
     </ColorModeContext.Provider>
   );
 };
-export default ThemeContext;

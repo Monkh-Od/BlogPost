@@ -1,18 +1,19 @@
 import axios from "axios";
 import { Box, Button, Container, Grid, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
-import Blogs from "../components/Blogs";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { useNavigate } from "react-router-dom";
 
-const BlogPost = () => {
+export const BlogPost = () => {
   const [posts, setPosts] = useState(null);
   const [page, setPage] = useState(1);
   const navigate = useNavigate();
   useEffect(() => {
     const getPosts = async () => {
       try {
-        const res = await axios.get(`http://localhost:8010/posts/allposts/9/${page}`);
+        const res = await axios.get(
+          `http://localhost:8010/posts/allposts/9/${page}`
+        );
         setPosts(res.data);
       } catch (error) {
         console.log(error);
@@ -72,12 +73,13 @@ const BlogPost = () => {
         >
           {next}
         </Button>
-        <Button sx={{ background: "#DFE2E8", color: "#6D7D8B", padding: "10px 50px" }} onClick={()=> navigate("/postcreate")}>
+        <Button
+          sx={{ background: "#DFE2E8", color: "#6D7D8B", padding: "10px 50px" }}
+          onClick={() => navigate("/postcreate")}
+        >
           Add post
         </Button>
       </Box>
     </Container>
   );
 };
-
-export default BlogPost;

@@ -10,4 +10,4 @@ export const useInput = (initialvalue) => {
     },
   };
   return [value, bind];
-}
+};

@@ -6,7 +6,7 @@ import { useContext } from "react";
 import { ColorModeContext } from "../contexts/themeContext";
 import { Box } from "@mui/system";
 import Cookies from "js-cookie";
-import { AuthContext } from "../context/AuthContext";
+import { AuthContext } from "../contexts/AuthContext";
 
 const style = {
   Container: {
@@ -18,7 +18,7 @@ const style = {
   },
 };
 
-const Signin = () => {
+export const Signin = () => {
   const navigate = useNavigate();
   const { color } = useContext(ColorModeContext);
   const [email, EmailBind] = useInput("");
@@ -84,5 +84,3 @@ const Signin = () => {
     </Box>
   );
 };
-
-export default Signin;

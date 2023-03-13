@@ -1,5 +1,5 @@
 import { Typography, Box, Link, Container, Grid } from "@mui/material";
-import React, { useState } from "react";
+import React from "react";
 
 const Midposts = ({ isInverted = false, image, spaced = false }) => {
   return (
