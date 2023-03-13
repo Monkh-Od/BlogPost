@@ -3,9 +3,10 @@ import { Box, Button, Container, Grid, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { useNavigate } from "react-router-dom";
+import Blogs from "../components/Blogs";
 
 export const BlogPost = () => {
-  const [posts, setPosts] = useState(null);
+  const [posts, setPosts] = useState([]);
   const [page, setPage] = useState(1);
   const navigate = useNavigate();
   useEffect(() => {
@@ -49,9 +50,10 @@ export const BlogPost = () => {
         </Typography>
       </Box>
       <Grid container spacing={3}>
-        {/* {posts.map((post, i) => (
+        {posts.map((post) => (
           <Grid item xs={6} xl={3} lg={4} md={4} sm={6}>
             <Blogs
+              id={post._id}
               text={post.text}
               title={post.title}
               image={post.image}
@@ -59,7 +61,7 @@ export const BlogPost = () => {
               avatarImage={post.avatarImage}
             />
           </Grid>
-        ))} */}
+        ))}
       </Grid>
       <Box display={"flex"} justifyContent={"center"} gap={5}>
         <Button

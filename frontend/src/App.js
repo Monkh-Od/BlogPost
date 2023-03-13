@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import PostCreate from "./components/PostCreate";
 import { Layout } from "./layout/Layout";
-import { BlogPost, Signin, Signup } from "./pages";
+import { BlogPost, Signin, Signup, Post } from "./pages";
 import { AuthProvider, ThemeContext } from "./contexts";
 import HomePage from "./pages/Home.jsx";
 
@@ -16,6 +16,7 @@ function App() {
               <Route path="/login" element={<Signin />} />
               <Route path="/signup" element={<Signup />} />
               <Route path="/blogposts" element={<BlogPost />} />
+              <Route path="/blogposts/:postId" element={<Post />} />
               <Route path="/postcreate" element={<PostCreate />} />
             </Routes>
           </Layout>
