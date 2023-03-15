@@ -8,6 +8,24 @@ exports.getPosts = async (req, res) => {
   });
   return res.status(200).json({ response });
 };
+
+exports.getPostById = async (req, res) => {
+  const postId = req.params.postId;
+  if (!postId || postId.length != 24) {
+    res.status(404).json({ message: "noPostFound" });
+    return;
+  }
+  const response = await Post.findById(postId).populate({
+    path: "owner",
+    select: "-password",
+  });
+  if (!response || response?.length === 0) {
+    res.status(404).json({ message: "noPostFound" });
+    return;
+  }
+  return res.status(200).json({ post: response });
+};
+
 exports.getAllPosts = async (req, res) => {
   try {
     const { limit, page } = Number(req.params);
@@ -19,7 +37,7 @@ exports.getAllPosts = async (req, res) => {
   } catch (error) {
     res.status(404).json({ message: error });
   }
-}
+};
 
 exports.createPost = async (req, res) => {
   if (!req.body.owner || !req.body.text)
