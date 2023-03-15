@@ -133,7 +133,7 @@ export const Header = () => {
         component="nav"
         sx={{
           backgroundColor:
-            offsetY === 0
+            offsetY === 0 && location.pathname === "/"
               ? "transparent"
               : color === "dark"
               ? "white"
@@ -189,7 +189,6 @@ export const Header = () => {
                 <MaterialUISwitch
                   sx={{ m: 1 }}
                   defaultChecked
-                  // checked={theme || color === "white" ? true : false}
                   onChange={() => {
                     changeTheme();
                   }}

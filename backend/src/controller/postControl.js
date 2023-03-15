@@ -9,7 +9,7 @@ exports.getPosts = async (req, res) => {
     res.status(404).send(error)
   }
 };
-
+  
 exports.getPostById = async (req, res) => {
   const postId = req.params.postId;
   if (!postId || postId.length != 24) {

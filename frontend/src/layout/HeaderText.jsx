@@ -3,12 +3,13 @@ import { Menu, MenuItem } from "@mui/material";
 import Cookies from "js-cookie";
 import { useContext, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { AuthContext } from "../contexts";
+import { AuthContext, ColorModeContext } from "../contexts";
 
 const navItems = ["Blogs", "Services", "Contact", "Log in", "Get Access"];
 
 export const Texts = () => {
   const [offsetY] = useState(0);
+  const { color } = useContext(ColorModeContext);
   const { currentuser, setCurrentUser } = useContext(AuthContext);
   const [anchorEl, setAnchorEl] = useState(null);
 
@@ -38,8 +39,10 @@ export const Texts = () => {
           <Button
             sx={{
               color:
-                offsetY !== 0 || location.pathname !== "/"
+                offsetY !== 0 && location.pathname !== "/"
                   ? "#6D7D8B"
+                  : color === "dark"
+                  ? "black"
                   : "white",
               textDecoration: item !== "Get Access" && "1px #6D7D8B underline",
               border:

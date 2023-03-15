@@ -1,13 +1,8 @@
 import { Avatar, Typography } from "@mui/material";
 import { Box, Container } from "@mui/system";
 import axios from "axios";
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import Img from "../assets/images/Rectangle.png";
-import { useContext } from "react";
+import { useEffect, useState, useContext } from "react";
 import { ColorModeContext } from "../contexts/themeContext";
-import axios from "axios";
-import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 export const Post = () => {
@@ -36,11 +31,11 @@ export const Post = () => {
     <Container
       maxWidth="md"
       sx={{
-        marginTop: "9vh",
+        paddingTop: "9vh",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        mb: 4,
+        pb: 4,
       }}
     >
       <Typography>No Post was found</Typography>
@@ -48,54 +43,96 @@ export const Post = () => {
   }
 
   return (
-    <Container
-      maxWidth="md"
-      sx={{
-        marginTop: "9vh",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        mb: 4,
-      }}
-    >
-      <Box sx={styles.titlepos}>
-        <Typography sx={styles.word}>{post?.title}</Typography>
-        <Box sx={styles.posit}>
-          <Avatar src="/static/images/avatar/1.jpg" />
-          <Typography>{post?.owner.email}</Typography>
-          <Typography>I</Typography>
-          <Typography>{post?.date}</Typography>
-        </Box>
-      </Box>
-      <img src={post?.image} alt="" style={styles.img} />
-      <Box sx={styles.position}>
-        <Typography sx={styles.words}>{post?.text}</Typography>
-        <Typography sx={styles.words}>{post?.text}</Typography>
-        <Box sx={styles.writtnby}>
-          <Avatar sx={{ width: "56px", height: "56px" }} />
-          <Box>
-            <Typography sx={{ fontSize: "14px" }}>Written by</Typography>
-            <Typography sx={{ fontSize: "20px" }}>
+    <Box backgroundColor={color === "dark" ? "white" : "black"}>
+      <Container
+        maxWidth="md"
+        sx={{
+          paddingTop: "9vh",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          pb: 4,
+          gap:10  
+        }}
+      >
+        <Box sx={styles.titlepos}>
+          <Typography
+            sx={styles.word}
+            color={color === "dark" ? "black" : "white"}
+          >
+            {post?.title}
+          </Typography>
+          <Box sx={styles.posit}>
+            <Avatar src="/static/images/avatar/1.jpg" />
+            <Typography sx={{ color: color === "dark" ? "black" : "white" }}>
               {post?.owner.email}
+            </Typography>
+            <Typography sx={{ color: color === "dark" ? "black" : "white" }}>
+              I
+            </Typography>
+            <Typography sx={{ color: color === "dark" ? "black" : "white" }}>
+              {post?.date}
             </Typography>
           </Box>
         </Box>
-      </Box>
-      <Box sx={styles.commpos}>
-        <Avatar />
-        <Box>
-          <Typography>Mikuun</Typography>
-          <Typography>Me bur aimr huurhuuunnn</Typography>
+        <img src={post?.image} alt="" style={styles.img} />
+        <Box sx={styles.position}>
+          <Typography
+            sx={styles.words}
+            color={color === "dark" ? "black" : "white"}
+          >
+            {post?.text}
+          </Typography>
+          <Box sx={styles.writtnby}>
+            <Avatar sx={{ width: "56px", height: "56px" }} />
+            <Box>
+              <Typography
+                sx={{
+                  fontSize: "14px",
+                  color: color === "dark" ? "black" : "white",
+                }}
+              >
+                Written by
+              </Typography>
+              <Typography
+                sx={{
+                  fontSize: "20px",
+                  color: color === "dark" ? "black" : "white",
+                }}
+              >
+                {post?.owner.email}
+              </Typography>
+            </Box>
+          </Box>
         </Box>
-      </Box>
-      <Box sx={styles.comm}>
-        <Typography>Join the conversation</Typography>
-        <Box display={"flex"}>
+        <Box sx={styles.commpos}>
           <Avatar />
-          <textarea id="w3review" name="w3review" rows="4" cols="30"></textarea>
+          <Box>
+            <Typography sx={{ color: color === "dark" ? "black" : "white" }}>
+              Mikuun
+            </Typography>
+            <Typography sx={{ color: color === "dark" ? "black" : "white" }}>
+              Me bur aimr huurhuuunnn
+            </Typography>
+          </Box>
         </Box>
-      </Box>
-    </Container>
+        <Box sx={styles.comm}>
+          <Typography sx={{ color: color === "dark" ? "black" : "white" }}>
+            Join the conversation
+          </Typography>
+          <Box display={"flex"}>
+            <Avatar />
+            <textarea
+              id="w3review"
+              name="w3review"
+              rows="4"
+              cols="30"
+              style={{ color: color === "dark" ? "black" : "white" }}
+            ></textarea>
+          </Box>
+        </Box>
+      </Container>
+    </Box>
   );
 };
 
@@ -105,9 +142,6 @@ const styles = {
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
-    height: {
-      xl: "90vh",
-    },
   },
   titlepos: {
     display: "flex",
@@ -117,9 +151,6 @@ const styles = {
     flexDirection: "column",
   },
   word: {
-    width: {
-      xl: "50vh",
-    },
     fontFamily: "Mukta",
     fontSize: "4vh",
     lineHeight: "6vh",

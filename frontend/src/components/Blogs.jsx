@@ -5,20 +5,19 @@ import {
   Card,
   CardActions
 } from "@mui/material";
-import { Box } from "@mui/system";
 import { useNavigate } from "react-router-dom";
 
 const Blogs = ({ image, text, title, owner, date, id }) => {
   const navigate = useNavigate();
   return (
     <Card
-      sx={{ maxWidth: 345, cursor: "pointer" }}
-      onClick={() => navigate(`/blog/${id}`)}
+      sx={{ maxWidth: 345, cursor: "pointer", borderRadius:"15px", padding: 2 }}
+      onClick={() => navigate(`/blogposts/${id}`)}
     >
       <CardMedia sx={{ height: 140 }} image={image} title="post image" />
       <CardContent
         sx={{
-          height: 180,
+          height: 200,
         }}
       >
         <Typography gutterBottom variant="h5" component="div">
