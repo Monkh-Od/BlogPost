@@ -1,27 +1,36 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import PostCreate from "./components/PostCreate";
+import UserInfoContext from "./contexts/UserInfoContext";
 import { Layout } from "./layout/Layout";
 import { BlogPost, Signin, Signup, Post } from "./pages";
 import { AuthProvider, ThemeContext } from "./contexts";
 import HomePage from "./pages/Home.jsx";
+<<<<<<< HEAD
+=======
+import Post from "./pages/Postpage";
+import Signin from "./pages/Signin";
+import Signup from "./pages/Signup";
+>>>>>>> 7bd8fb8 (did post create and fixed backend)
 
 function App() {
   return (
     <BrowserRouter>
-      <AuthProvider>
-        <ThemeContext>
-          <Layout>
-            <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/login" element={<Signin />} />
-              <Route path="/signup" element={<Signup />} />
-              <Route path="/blogposts" element={<BlogPost />} />
-              <Route path="/blogposts/:postId" element={<Post />} />
-              <Route path="/postcreate" element={<PostCreate />} />
-            </Routes>
-          </Layout>
-        </ThemeContext>
-      </AuthProvider>
+      <UserInfoContext>
+        <AuthProvider>
+          <ThemeContext>
+            <Layout>
+              <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/login" element={<Signin />} />
+                <Route path="/signup" element={<Signup />} />
+                <Route path="/blogposts" element={<BlogPost />} />
+                <Route path="/blogposts/:postId" element={<Post />} />
+                <Route path="/blog/postcreate" element={<PostCreate />} />
+              </Routes>
+            </Layout>
+          </ThemeContext>
+        </AuthProvider>
+      </UserInfoContext>
     </BrowserRouter>
   );
 }

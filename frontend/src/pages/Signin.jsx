@@ -56,7 +56,7 @@ export const Signin = () => {
           focused
           sx={{ mt: 3, input: { color: color === "dark" ? "black" : "white" } }}
           fullWidth
-          {...EmailBind}
+          {...EmailBind}  
         />
         <TextField
           label="Password"

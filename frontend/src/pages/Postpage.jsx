@@ -1,5 +1,8 @@
 import { Avatar, Typography } from "@mui/material";
 import { Box, Container } from "@mui/system";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import Img from "../assets/images/Rectangle.png";
 import { useContext } from "react";
 import { ColorModeContext } from "../contexts/themeContext";

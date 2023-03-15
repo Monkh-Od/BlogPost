@@ -13,7 +13,9 @@ export const BlogPost = () => {
     const getPosts = async () => {
       try {
         const res = await axios.get(
+          
           `http://localhost:8010/posts/allposts/9/${page}`
+        
         );
         setPosts(res.data);
       } catch (error) {
@@ -50,15 +52,14 @@ export const BlogPost = () => {
         </Typography>
       </Box>
       <Grid container spacing={3}>
-        {posts.map((post) => (
+        {posts?.map((post, i) => (
           <Grid item xs={6} xl={3} lg={4} md={4} sm={6}>
             <Blogs
               id={post._id}
               text={post.text}
               title={post.title}
               image={post.image}
-              owner={post.owner}
-              avatarImage={post.avatarImage}
+              owner={post.owner.email}
             />
           </Grid>
         ))}
@@ -77,7 +78,7 @@ export const BlogPost = () => {
         </Button>
         <Button
           sx={{ background: "#DFE2E8", color: "#6D7D8B", padding: "10px 50px" }}
-          onClick={() => navigate("/postcreate")}
+          onClick={() => navigate("/blog/postcreate")}
         >
           Add post
         </Button>

@@ -1,12 +1,13 @@
 const Post = require("../model/posts");
 
 exports.getPosts = async (req, res) => {
-  if (!req.body.owner) return res.status(404).json({ message: "No owner" });
-  const response = await Post.find().populate({
-    path: "owner",
-    select: "-password",
-  });
-  return res.status(200).json({ response });
+  try {
+    const _id = req.params.id;
+    const response = await Post.findById({ _id });
+    res.status(200).send(response);
+  } catch (error) {
+    res.status(404).send(error)
+  }
 };
 
 exports.getPostById = async (req, res) => {
@@ -29,9 +30,13 @@ exports.getPostById = async (req, res) => {
 exports.getAllPosts = async (req, res) => {
   try {
     const { limit, page } = Number(req.params);
-    const posts = await Post.find({})
+    const posts = await Post.find()
       .limit(limit)
       .skip(limit * (page - 1))
+      .populate({
+        path: "owner",
+        select: "-password",
+      })
       .exec();
     res.status(200).send(posts);
   } catch (error) {

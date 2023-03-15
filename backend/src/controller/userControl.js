@@ -36,7 +36,7 @@ exports.Login = async (req, res) => {
           process.env.ACCESS_TOKEN_KEY,
           { expiresIn: "1h" }
         );
-        res.status(200).send({ email: user.email, match: match, token: token });
+        res.status(200).send({ email: user.email, match: match, token: token, owner: user._id });
       } else {
         res.status(404).send({ message: "wrong password" });
       }
