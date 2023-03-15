@@ -3,7 +3,7 @@ import { Menu, MenuItem } from "@mui/material";
 import Cookies from "js-cookie";
 import { useContext, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { AuthContext } from "../context/AuthContext";
+import { AuthContext } from "../contexts";
 
 const navItems = ["Blogs", "Services", "Contact", "Log in", "Get Access"];
 

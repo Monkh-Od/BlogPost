@@ -28,7 +28,7 @@ const style = {
 
 export const Signup = () => {
   const navigate = useNavigate();
-  const [email, setEmail] = useInput("");
+  const [email, emailBind] = useInput("");
   const [password1, setPassword1] = useState();
   const [password2, setPassword2] = useState();
   const [showPassword1, setShowPassword1] = useState(false);
@@ -62,9 +62,7 @@ export const Signup = () => {
             focused
             sx={{ mt: 3 }}
             fullWidth
-            onChange={(e) => {
-              setEmail(e.target.value);
-            }}
+            {...emailBind}
           />
           <TextField
             label="Password"
