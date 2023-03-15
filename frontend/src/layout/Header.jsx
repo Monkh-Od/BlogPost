@@ -30,12 +30,12 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
       },
       "& + .MuiSwitch-track": {
         opacity: 1,
-        backgroundColor: theme.palette.mode === "dark" ? "#8796A5" : "#aab4be",
+        backgroundColor: "#8796A5",
       },
     },
   },
   "& .MuiSwitch-thumb": {
-    backgroundColor: theme.palette.mode === "dark" ? "#003892" : "#001e3c",
+    backgroundColor: "#003892",
     width: 32,
     height: 32,
     "&:before": {
@@ -54,7 +54,7 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
   },
   "& .MuiSwitch-track": {
     opacity: 1,
-    backgroundColor: theme.palette.mode === "dark" ? "#8796A5" : "#aab4be",
+    backgroundColor: "#8796A5",
     borderRadius: 20 / 2,
   },
 }));
@@ -184,6 +184,18 @@ export const Header = () => {
                 }}
               ></Box>
             </Box>
+            <FormControlLabel
+              control={
+                <MaterialUISwitch
+                  sx={{ m: 1 }}
+                  defaultChecked
+                  // checked={theme || color === "white" ? true : false}
+                  onChange={() => {
+                    changeTheme();
+                  }}
+                />
+              }
+            />
             <Texts />
           </Toolbar>
         </Container>
