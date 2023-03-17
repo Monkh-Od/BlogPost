@@ -46,9 +46,11 @@ export const BlogPost = () => {
       >
         <Box>
           <Typography variant="h4" sx={{ fontBold: "900" }}>
-            <b>Blog posts</b>
+            <b style={{ color: color === "dark" ? "black" : "white" }}>
+              Blog posts
+            </b>
           </Typography>
-          <Typography>
+          <Typography color={color === "dark" ? "black" : "white"}>
             Our latest updates and blogs about managing your team
           </Typography>
         </Box>

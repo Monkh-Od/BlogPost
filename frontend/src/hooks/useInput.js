@@ -1,5 +1,4 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
+import { useState } from "react";
 
 export const useInput = (initialvalue) => {
   const [value, setValue] = useState(initialvalue);
@@ -8,7 +7,7 @@ export const useInput = (initialvalue) => {
     value: value,
     onChange: (event) => {
       setValue(event.target.value);
-    },
+    }
   };
   return [value, bind];
 };

@@ -3,12 +3,13 @@ import { Box, Container } from "@mui/system";
 import axios from "axios";
 import { useEffect, useState, useContext } from "react";
 import { ColorModeContext } from "../contexts/themeContext";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import EditIcon from "@mui/icons-material/Edit";
 
 export const Post = () => {
   const { color } = useContext(ColorModeContext);
   const [post, setPost] = useState(null);
-  const navigate = useNavigate();
   const { postId } = useParams();
   useEffect(() => {
     const getPost = async () => {
@@ -16,18 +17,22 @@ export const Post = () => {
         const res = await axios.get(
           `http://localhost:8010/posts/getpost/${postId}`
         );
-        console.log(res.data.post);
         setPost(res.data.post);
       } catch (error) {
         console.log(error);
-        console.log("no post");
-        navigate("/");
       }
     };
     getPost();
   }, []);
-  console.log(post);
-  if (!post) {
+  const deletePost = async () => {
+    try {
+      await axios.delete(`http://localhost:8010/posts/deletePost/${postId}`);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  if (!post) (
     <Container
       maxWidth="md"
       sx={{
@@ -39,8 +44,8 @@ export const Post = () => {
       }}
     >
       <Typography>No Post was found</Typography>
-    </Container>;
-  }
+    </Container>
+ )
 
   return (
     <Box backgroundColor={color === "dark" ? "white" : "black"}>
@@ -52,7 +57,7 @@ export const Post = () => {
           flexDirection: "column",
           alignItems: "center",
           pb: 4,
-          gap:10  
+          gap: 10
         }}
       >
         <Box sx={styles.titlepos}>
@@ -109,10 +114,10 @@ export const Post = () => {
           <Avatar />
           <Box>
             <Typography sx={{ color: color === "dark" ? "black" : "white" }}>
-              Mikuun
+            {post?.owner.email}
             </Typography>
             <Typography sx={{ color: color === "dark" ? "black" : "white" }}>
-              Me bur aimr huurhuuunnn
+            CEO Team App
             </Typography>
           </Box>
         </Box>
@@ -130,6 +135,17 @@ export const Post = () => {
               style={{ color: color === "dark" ? "black" : "white" }}
             ></textarea>
           </Box>
+        </Box>
+        <Box
+          sx={{ cursor: "pointer", display: "flex", gap: 2 }}
+          onClick={() => deletePost()}
+        >
+          <Typography>Delete Post</Typography>
+          <DeleteForeverIcon sx={{ color: "red" }} />
+        </Box>
+        <Box sx={{ cursor: "pointer", display: "flex", gap: 2 }}>
+          <Typography>Edit post</Typography>
+          <EditIcon />
         </Box>
       </Container>
     </Box>
@@ -192,5 +208,3 @@ const styles = {
     fontFamily: "Mulish",
   },
 };
-
-export default Post;

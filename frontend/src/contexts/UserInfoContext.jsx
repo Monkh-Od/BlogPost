@@ -2,14 +2,15 @@ import { createContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useInput } from "../hooks/useInput";
 import axios from "axios";
+import Cookies from "js-cookie";
 
 export const UserContext = createContext();
 
-const UserInfoContext = ({ children }) => {
+export const UserInfoContext = ({ children }) => {
   const navigate = useNavigate();
   const [email, EmailBind] = useInput("");
   const [password, PasswordBind] = useInput("");
-  const [userinfo, setUserInfo] = useState(null);
+  const [userinfo, setUserInfo] = useState();
 
   const login = async () => {
     try {
@@ -18,11 +19,12 @@ const UserInfoContext = ({ children }) => {
         password: password,
       });
       if (data.match) navigate("/blogposts");
-      setUserInfo(data.owner);
+      Cookies.set("owner", data.owner);
+      setUserInfo();
     } catch (error) {
       console.log(error);
     }
-  };
+  }; 
 
   return (
     <UserContext.Provider
@@ -38,5 +40,3 @@ const UserInfoContext = ({ children }) => {
     </UserContext.Provider>
   );
 };
-
-export default UserInfoContext;

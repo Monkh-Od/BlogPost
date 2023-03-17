@@ -4,9 +4,12 @@ import { useStorage } from "../hooks";
 import { useInput } from "../hooks/useInput";
 import axios from "axios";
 import { UserContext } from "../contexts/UserInfoContext";
+import { ColorModeContext } from "../contexts";
+import Cookies from "js-cookie";
 
 const PostCreate = () => {
   const { owner } = useContext(UserContext);
+  const { color } = useContext(ColorModeContext);
   const [title, titleBind] = useInput("");
   const [text, textBind] = useInput("");
   const [file, setFile] = useState(null);
@@ -18,6 +21,7 @@ const PostCreate = () => {
     setImageURL(res);
   };
   const create = async () => {
+    const owner = Cookies.get("owner");
     if (!title || !text || !imageURL) return;
     try {
       const res = await axios.post("http://localhost:8010/posts/createPost", {
@@ -43,10 +47,11 @@ const PostCreate = () => {
             flexDirection: "column",
             alignItems: "center",
             gap: 5,
+            backgroundColor: color === "dark" ? "white" : "black",
+            color: color === "dark" ? "black" : "white",
+            height: "90vh",
           }}
-          onClick={()=> {
-            
-          }}
+          onClick={() => {}}
         >
           <Box>
             <Typography variant="h5">Write a title for your post</Typography>
@@ -73,9 +78,7 @@ const PostCreate = () => {
           </Button>
         </Container>
       ) : (
-        <Box>
-          Done
-        </Box>
+        <Box height={"100vh"} display={"flex"} justifyContent={"center"} alignItems={"center"}><Typography variant="h1">Post created</Typography></Box>
       )}
     </Box>
   );

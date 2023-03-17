@@ -34,6 +34,7 @@ export const Signin = () => {
 
       Cookies.set("token", data.token);
       Cookies.set("email", data.email);
+      Cookies.set("owner", data.owner)
       setCurrentUser(data.email);
 
       if (data.match) navigate("/blogposts");

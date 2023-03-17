@@ -1,10 +1,8 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import PostCreate from "./components/PostCreate";
-import UserInfoContext from "./contexts/UserInfoContext";
 import { Layout } from "./layout/Layout";
-import { BlogPost, Post, Signin, Signup } from "./pages";
-import { AuthProvider, ThemeContext } from "./contexts";
-import HomePage from "./pages/Home.jsx";
+import { BlogPost, HomePage, Post, Signin, Signup } from "./pages";
+import { AuthProvider, ThemeContext, UserInfoContext } from "./contexts";
 
 function App() {
   return (
