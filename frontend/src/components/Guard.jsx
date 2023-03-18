@@ -1,11 +1,11 @@
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { UserContext } from "../contexts/UserInfoContext";
+import { AuthContext } from "../contexts";
 
 const GuardRoute = ({children}) => {
-  const { email } = useContext(UserContext);
+  const {currentuser} = useContext(AuthContext)
   const navigate = useNavigate();
-  if (!email) {
+  if (!currentuser) {
     alert("login first");
     navigate("/login");
     return;

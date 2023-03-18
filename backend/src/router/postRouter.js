@@ -7,6 +7,7 @@ const {
   getAllPosts,
   getPostById,
 } = require("../controller/postControl");
+// const { authenticateToken } = require("../middleware/verifying");
 
 const postRouter = express.Router();
 

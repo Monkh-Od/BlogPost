@@ -2,14 +2,13 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import PostCreate from "./components/PostCreate";
 import { Layout } from "./layout/Layout";
 import { BlogPost, HomePage, Post, Signin, Signup } from "./pages";
-import { AuthProvider, ThemeContext, UserInfoContext } from "./contexts";
+import { AuthProvider, ThemeContext } from "./contexts";
 
 import React from "react";
 import Contact from "./pages/Contact";
 function App() {
   return (
     <BrowserRouter>
-      <UserInfoContext>
         <AuthProvider>
           <ThemeContext>
             <Layout>
@@ -25,7 +24,6 @@ function App() {
             </Layout>
           </ThemeContext>
         </AuthProvider>
-      </UserInfoContext>
     </BrowserRouter>
   );
 }

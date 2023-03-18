@@ -1,14 +1,21 @@
-import { Avatar, Typography } from "@mui/material";
+import { Avatar, Grid, Typography } from "@mui/material";
 import { Box, Container } from "@mui/system";
 import axios from "axios";
 import { useEffect, useState, useContext } from "react";
 import { ColorModeContext } from "../contexts/themeContext";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import EditIcon from "@mui/icons-material/Edit";
+import { useInput } from "../hooks/useInput";
+import { AuthContext } from "../contexts/AuthContext";
+import { Comments } from "../components/Comments";
 
 export const Post = () => {
+  const [comment, CommentBind] = useInput("");
+  const [allComments, setAllComments] = useState(null);
+  const { currentuser } = useContext(AuthContext);
   const { color } = useContext(ColorModeContext);
+  const navigate = useNavigate();
   const [post, setPost] = useState(null);
   const { postId } = useParams();
   useEffect(() => {
@@ -23,16 +30,42 @@ export const Post = () => {
       }
     };
     getPost();
+    const getComments = async () => {
+      try {
+        const { data } = await axios.get(
+          `http://localhost:8010/comments/${postId}`
+        );
+        setAllComments(data.res);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getComments();
   }, []);
+
   const deletePost = async () => {
     try {
-      await axios.delete(`http://localhost:8010/posts/deletePost/${postId}`);
+      const res = await axios.delete(
+        `http://localhost:8010/posts/deletePost/${postId}`
+      );
+      if (res) navigate("/blogposts");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const createComment = async () => {
+    try {
+      await axios.post("http://localhost:8010/comments/createComment", {
+        username: currentuser,
+        postId: postId,
+        text: comment,
+      });
     } catch (error) {
       console.log(error);
     }
   };
 
-  if (!post) (
+  if (!post)
     <Container
       maxWidth="md"
       sx={{
@@ -44,8 +77,7 @@ export const Post = () => {
       }}
     >
       <Typography>No Post was found</Typography>
-    </Container>
- )
+    </Container>;
 
   return (
     <Box backgroundColor={color === "dark" ? "white" : "black"}>
@@ -57,7 +89,7 @@ export const Post = () => {
           flexDirection: "column",
           alignItems: "center",
           pb: 4,
-          gap: 10
+          gap: 10,
         }}
       >
         <Box sx={styles.titlepos}>
@@ -114,13 +146,20 @@ export const Post = () => {
           <Avatar />
           <Box>
             <Typography sx={{ color: color === "dark" ? "black" : "white" }}>
-            {post?.owner.email}
+              {post?.owner.email}
             </Typography>
             <Typography sx={{ color: color === "dark" ? "black" : "white" }}>
-            CEO Team App
+              CEO Team App
             </Typography>
           </Box>
         </Box>
+        <Grid container sx={{display:"flex", flexDirection:"column", gap: 5}}>
+          {allComments?.map((comments, i) => (
+            <Grid item xs={12} md={12} xl={6}>
+              <Comments comment={comments}/>
+            </Grid>
+          ))}
+        </Grid>
         <Box sx={styles.comm}>
           <Typography sx={{ color: color === "dark" ? "black" : "white" }}>
             Join the conversation
@@ -133,6 +172,8 @@ export const Post = () => {
               rows="4"
               cols="30"
               style={{ color: color === "dark" ? "black" : "white" }}
+              {...CommentBind}
+              onKeyDown={(e) => e.code === "Enter" && createComment()}
             ></textarea>
           </Box>
         </Box>

@@ -3,12 +3,10 @@ import { useContext, useState } from "react";
 import { useStorage } from "../hooks";
 import { useInput } from "../hooks/useInput";
 import axios from "axios";
-import { UserContext } from "../contexts/UserInfoContext";
 import { ColorModeContext } from "../contexts";
 import Cookies from "js-cookie";
 
 const PostCreate = () => {
-  const { owner } = useContext(UserContext);
   const { color } = useContext(ColorModeContext);
   const [title, titleBind] = useInput("");
   const [text, textBind] = useInput("");

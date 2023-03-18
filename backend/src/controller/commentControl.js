@@ -18,17 +18,22 @@ exports.deleteComment = async (req, res) => {
     res.status(404).send(error);
   }
 };
-exports.getComment = async (req, res) => {
-    const _id = req.params.id
-    try {
-        const comments = await Comment.find({_id})
-        res.status(200).send(comments);
-      } catch (error) {
-        res.status(404).send(error);
-      }
+exports.getCommentByPost = async (req, res) => {
+  const postId = req.params.id;
+  try {
+    const response = await Comment.find({ postId })
+      .populate({
+        path: "postId",
+        select: "-title",
+      })
+      .exec();
+    res.status(200).send({ res: response });
+  } catch (error) {
+    res.status(404).send(error);
+  }
 };
 exports.updateComment = async (req, res) => {
-  const _id = req.params.id;
+  const _id = req.params. id;
   const body = req.body;
   try {
     const comment = await Comment.findByIdAndUpdate({ _id }, { ...body });

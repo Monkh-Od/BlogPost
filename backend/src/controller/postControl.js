@@ -6,10 +6,10 @@ exports.getPosts = async (req, res) => {
     const response = await Post.findById({ _id });
     res.status(200).send(response);
   } catch (error) {
-    res.status(404).send(error)
+    res.status(404).send(error);
   }
 };
-  
+
 exports.getPostById = async (req, res) => {
   const postId = req.params.postId;
   if (!postId || postId.length != 24) {
@@ -21,7 +21,7 @@ exports.getPostById = async (req, res) => {
     select: "-password",
   });
   if (!response || response?.length === 0) {
-    res.status(404).json({ message: "noPostFound" });
+    res.status(404).json({ message: "no Post Found" });
     return;
   }
   return res.status(200).json({ post: response });
