@@ -6,7 +6,7 @@ import axios from "axios";
 import { ColorModeContext } from "../contexts";
 import Cookies from "js-cookie";
 
-const PostCreate = () => {
+export const PostCreate = () => {
   const { color } = useContext(ColorModeContext);
   const [title, titleBind] = useInput("");
   const [text, textBind] = useInput("");
@@ -76,10 +76,15 @@ const PostCreate = () => {
           </Button>
         </Container>
       ) : (
-        <Box height={"100vh"} display={"flex"} justifyContent={"center"} alignItems={"center"}><Typography variant="h1">Post created</Typography></Box>
+        <Box
+          height={"100vh"}
+          display={"flex"}
+          justifyContent={"center"}
+          alignItems={"center"}
+        >
+          <Typography variant="h1">Post created</Typography>
+        </Box>
       )}
     </Box>
   );
 };
-
-export default PostCreate;

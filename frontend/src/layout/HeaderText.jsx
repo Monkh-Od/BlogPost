@@ -56,6 +56,7 @@ export const Texts = () => {
               }
               item === "Log in" && navigate("/login");
               item === "Blogs" && navigate("/blogposts");
+              item === "Services" && navigate("/service");
             }}
           >
             {item === "Log in" && currentuser ? currentuser : item}
